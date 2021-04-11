@@ -1,0 +1,17 @@
+/db
+/.qsys_edit
+/soc_system*
+/c5_pin_model_dump*
+/*.done
+/*.rpt
+/*.smsg
+/*.summary
+/*.jdi
+/hps_isw_handoff
+/*.csv
+/incremental_db
+/*.sof
+/*.rbf
+/BASIC_NANO_SOC.pin
+/BASIC_NANO_SOC.qsf
+/BASIC_NANO_SOC.sld
