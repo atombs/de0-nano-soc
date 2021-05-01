@@ -1,0 +1,20 @@
+echo set root environment variable
+setenv root /dev/mmcblk0p2
+
+echo set fpga 0
+setenv fpga 0
+echo set bootargs
+setenv bootargs console=ttyS0,115200 debug ignore_loglevel earlyprintk=ttyS0,115200 break=y root=${root} rootwait rw ${bootargs_extra} ${runlevel}
+
+echo load rbf and zImage
+fatload mmc 0:1 0x2000000 basic_nano_soc.rbf
+fatload mmc 0:1 ${kernel_addr_r} zImage
+
+echo load fpga and enable bridge
+fpga load 0 0x2000000 1436400
+bridge enable 0xffffffff
+
+echo load dtb
+fatload mmc 0:1 ${fdt_addr_r} soc_system.dtb
+echo boot kernel
+bootz ${kernel_addr_r} - ${fdt_addr_r}   

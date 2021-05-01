@@ -171,13 +171,96 @@ port (
 		memory_mem_odt                        : out   std_logic;                                        --                               .mem_odt
 		memory_mem_dm                         : out   std_logic_vector(3 downto 0);                     --                               .mem_dm
 		memory_oct_rzqin                      : in    std_logic                    ;             --                               .oct_rzqin
-		reset_reset_n                         : in    std_logic                                  --                          reset.reset_n
+		reset_reset_n                         : in    std_logic;                                  --                          reset.reset_n
+		hps_0_i2c2_out_data                   : out   std_logic;                                        -- out_data
+			hps_0_i2c2_sda                        : in    std_logic;             -- sda
+			hps_0_i2c2_scl_in_clk                 : in    std_logic;             -- clk
+			hps_0_uart1_cts                       : in    std_logic:= 'X';             -- cts
+			hps_0_uart1_dsr                       : in    std_logic:= 'X';             -- dsr
+			hps_0_uart1_dcd                       : in    std_logic:= 'X';             -- dcd
+			hps_0_uart1_ri                        : in    std_logic:= 'X';             -- ri
+			hps_0_uart1_dtr                       : out   std_logic;                                        -- dtr
+			hps_0_uart1_rts                       : out   std_logic;                                        -- rts
+			hps_0_uart1_out1_n                    : out   std_logic;                                        -- out1_n
+			hps_0_uart1_out2_n                    : out   std_logic;                                        -- out2_n
+			hps_0_uart1_rxd                       : in    std_logic;             -- rxd
+			hps_0_uart1_txd                       : out   std_logic;
+			hps_0_i2c2_clk_clk                    : out   std_logic 
 	);
 	END COMPONENT soc_system;
+	
+	COMPONENT i2c2_sda_iobuf IS
+	PORT (
+		datain		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		oe		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		dataio		: INOUT STD_LOGIC_VECTOR (0 DOWNTO 0);
+		dataout		: OUT STD_LOGIC_VECTOR (0 DOWNTO 0)
+	);
+	END COMPONENT i2c2_sda_iobuf;
+	
+	COMPONENT i2c2_scl_iobuf IS
+	PORT (
+		datain		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		oe		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		dataio		: INOUT STD_LOGIC_VECTOR (0 DOWNTO 0);
+		dataout		: OUT STD_LOGIC_VECTOR (0 DOWNTO 0)
+	);
+	END COMPONENT i2c2_scl_iobuf;
+	
+	COMPONENT uart1_tx_iobuf IS
+	PORT
+	(
+		datain		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		oe		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		dataout		: OUT STD_LOGIC_VECTOR (0 DOWNTO 0)
+	);
+	END COMPONENT uart1_tx_iobuf;
+	
+	COMPONENT uart1_rx_iobuf IS
+	PORT
+	(
+		datain		: IN STD_LOGIC_VECTOR (0 DOWNTO 0);
+		dataout		: OUT STD_LOGIC_VECTOR (0 DOWNTO 0)
+	);
+	END COMPONENT uart1_rx_iobuf;
+	
+	
 	signal hps_fpga_reset_n : std_logic;
+	signal scl2_o_e : std_logic_vector (0 DOWNTO 0);
+	signal sda2_o_e : std_logic_vector (0 DOWNTO 0);
+	signal sda2_o 	 : std_logic_vector (0 DOWNTO 0);
+	signal scl2_o	 : std_logic_vector (0 DOWNTO 0);
+	signal uart1_tx : std_logic;
+	signal uart1_rx : std_logic;
 	
 BEGIN
-	LED <= b"10101010";
+	LED <= b"11100011";
+	
+	i2c2_sda : COMPONENT i2c2_sda_iobuf PORT MAP (
+		datain		=>		b"0",
+		oe				=>		sda2_o_e,
+		dataio(0)	=>		ARDUINO_IO(14),
+		dataout		=>		sda2_o
+	);
+	
+	i2c2_scl : COMPONENT i2c2_scl_iobuf PORT MAP (
+		datain		=>		b"0",
+		oe				=>		scl2_o_e,
+		dataio(0)	=>		ARDUINO_IO(15),
+		dataout		=>		scl2_o
+	);
+	
+	uart1_tx_comp : COMPONENT uart1_tx_iobuf PORT MAP (
+		datain(0)	=> uart1_tx,
+		oe(0)			=> '1',
+		dataout(0)  => ARDUINO_IO(0)
+	);
+	
+	uart1_rx_comp : COMPONENT uart1_rx_iobuf PORT MAP (
+		datain(0)	=>	ARDUINO_IO(1),	 
+		dataout(0)	=> uart1_rx
+	);
+	
 	hps : COMPONENT soc_system PORT MAP (
 		button_pio_external_connection_export(0) 	=> KEY(0),
 		button_pio_external_connection_export(1) 	=> KEY(1),
@@ -249,8 +332,13 @@ BEGIN
 		memory_mem_odt                        =>HPS_DDR3_ODT,
 		memory_mem_dm                         =>HPS_DDR3_DM,
 		memory_oct_rzqin                      =>HPS_DDR3_RZQ,
-		reset_reset_n                         => '1'
-	
+		reset_reset_n                         => '1',
+		hps_0_uart1_rxd                       => uart1_rx,
+		hps_0_uart1_txd                		  => uart1_tx,
+		hps_0_i2c2_clk_clk                	  => scl2_o_e(0),
+		hps_0_i2c2_scl_in_clk            	  => scl2_o(0),         
+		hps_0_i2c2_out_data              	  => sda2_o_e(0),                	
+		hps_0_i2c2_sda                    	  => sda2_o(0)  
 	);
 
 	

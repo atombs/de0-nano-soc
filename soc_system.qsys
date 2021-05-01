@@ -218,7 +218,7 @@
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="lockedInterfaceDefinition" value="" />
  <parameter name="maxAdditionalLatency" value="1" />
- <parameter name="projectName">BASIC_NANO_SOC.qpf</parameter>
+ <parameter name="projectName" value="BASIC_NANO_SOC.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
  <parameter name="testBenchDutName" value="" />
@@ -247,6 +247,18 @@
    dir="start" />
  <interface name="hps_0_h2f_user0_clock" internal="hps_0.h2f_user0_clock" />
  <interface name="hps_0_hps_io" internal="hps_0.hps_io" type="conduit" dir="end" />
+ <interface name="hps_0_i2c2" internal="hps_0.i2c2" type="conduit" dir="end" />
+ <interface
+   name="hps_0_i2c2_clk"
+   internal="hps_0.i2c2_clk"
+   type="clock"
+   dir="start" />
+ <interface
+   name="hps_0_i2c2_scl_in"
+   internal="hps_0.i2c2_scl_in"
+   type="clock"
+   dir="end" />
+ <interface name="hps_0_uart1" internal="hps_0.uart1" type="conduit" dir="end" />
  <interface
    name="led_pio_external_connection"
    internal="led_pio.external_connection"
@@ -433,7 +445,7 @@
      value="100" />
   <parameter name="FPGA_PERIPHERAL_INPUT_CLOCK_FREQ_I2C0_SCL_IN" value="100" />
   <parameter name="FPGA_PERIPHERAL_INPUT_CLOCK_FREQ_I2C1_SCL_IN" value="100" />
-  <parameter name="FPGA_PERIPHERAL_INPUT_CLOCK_FREQ_I2C2_SCL_IN" value="100" />
+  <parameter name="FPGA_PERIPHERAL_INPUT_CLOCK_FREQ_I2C2_SCL_IN" value="0" />
   <parameter name="FPGA_PERIPHERAL_INPUT_CLOCK_FREQ_I2C3_SCL_IN" value="100" />
   <parameter name="FPGA_PERIPHERAL_INPUT_CLOCK_FREQ_SPIS0_SCLK_IN" value="100" />
   <parameter name="FPGA_PERIPHERAL_INPUT_CLOCK_FREQ_SPIS1_SCLK_IN" value="100" />
@@ -469,8 +481,8 @@
   <parameter name="I2C0_PinMuxing" value="HPS I/O Set 0" />
   <parameter name="I2C1_Mode" value="I2C" />
   <parameter name="I2C1_PinMuxing" value="HPS I/O Set 0" />
-  <parameter name="I2C2_Mode" value="N/A" />
-  <parameter name="I2C2_PinMuxing" value="Unused" />
+  <parameter name="I2C2_Mode" value="Full" />
+  <parameter name="I2C2_PinMuxing" value="FPGA" />
   <parameter name="I2C3_Mode" value="N/A" />
   <parameter name="I2C3_PinMuxing" value="Unused" />
   <parameter name="INCLUDE_BOARD_DELAY_MODEL" value="false" />
@@ -746,8 +758,8 @@
   <parameter name="TRFC" value="350" />
   <parameter name="UART0_Mode" value="No Flow Control" />
   <parameter name="UART0_PinMuxing" value="HPS I/O Set 0" />
-  <parameter name="UART1_Mode" value="N/A" />
-  <parameter name="UART1_PinMuxing" value="Unused" />
+  <parameter name="UART1_Mode" value="Full" />
+  <parameter name="UART1_PinMuxing" value="FPGA" />
   <parameter name="USB0_Mode" value="N/A" />
   <parameter name="USB0_PinMuxing" value="Unused" />
   <parameter name="USB1_Mode" value="SDR" />
