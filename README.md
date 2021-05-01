@@ -13,4 +13,4 @@ This project is based off the "HPS_CONTROL_FPGA_LED" example provided by Terasic
 6. Back in the main Quartus Prime window select Processing->Start Complilation. Compliation should now take place (the length of time can vary between computers but will be measured in minutes).
 7. When the build is complete a suitable programming file (bit steam) can be created by selecting File->Convert Programming Files. On the following window, select the Programming File Type to be "Raw Binary File (rbf)", select the mode to be Passive Parallel x16. Select the SOF Data and then click on Add File... On the following window choose the BASIC_NANO_SOC.sof file. Then select this file and click on Properties and check the Compression tick-box, before OK. Finally click Generate. The file that is geneated can then be copied over the file provided in the SD card image provided by Terasic for the DE0 Nano SoC.
 
-
+dd if=sdcard_cv.img of=/dev/sdb bs=4M conv=fsync
