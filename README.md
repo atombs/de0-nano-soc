@@ -15,4 +15,5 @@ This project is based off the "HPS_CONTROL_FPGA_LED" example provided by Terasic
 
 
 mkimage -A arm -O linux -T script -C none -n boot.scr -d boot.scr boot.scr.uimg
+
 dd if=sdcard_cv.img of=/dev/sdb bs=4M conv=fsync
