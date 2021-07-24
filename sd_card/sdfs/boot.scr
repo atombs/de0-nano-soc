@@ -6,6 +6,9 @@ setenv fpga 0
 echo set bootargs
 setenv bootargs console=ttyS0,115200 debug ignore_loglevel earlyprintk=ttyS0,115200 break=y root=${root} rootwait rw ${bootargs_extra} ${runlevel}
 
+echo setting MAC address
+setenv ethaddr 00:01:02:03:04:05
+
 echo load rbf and zImage
 fatload mmc 0:1 0x2000000 basic_nano_soc.rbf
 fatload mmc 0:1 ${kernel_addr_r} zImage

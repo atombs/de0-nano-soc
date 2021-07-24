@@ -338,7 +338,8 @@ BEGIN
 		hps_0_i2c2_clk_clk                	  => scl2_o_e(0),
 		hps_0_i2c2_scl_in_clk            	  => scl2_o(0),         
 		hps_0_i2c2_out_data              	  => sda2_o_e(0),                	
-		hps_0_i2c2_sda                    	  => sda2_o(0)  
+		hps_0_i2c2_sda                    	  => sda2_o(0)
+
 	);
 
 	
