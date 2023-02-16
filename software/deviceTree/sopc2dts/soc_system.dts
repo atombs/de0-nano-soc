@@ -1025,7 +1025,7 @@
 			compatible = "arm,cortex-a9-twd-timer-20.1", "arm,cortex-a9-twd-timer";
 			reg = <0xfffec600 0x00000100>;
 			interrupt-parent = <&hps_0_arm_gic_0>;
-			interrupts = <1 13 3844>;
+			interrupts = <1 13 0xf01>;
 			clocks = <&mpu_periph_clk>;
 		}; //end timer@0xfffec600 (hps_0_timer)
 

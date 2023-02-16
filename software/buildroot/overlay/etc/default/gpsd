@@ -1,0 +1,2 @@
+GPSD_OPTIONS="-n -G -b"
+DEVICES="/dev/ttyS1 /dev/pps0"
